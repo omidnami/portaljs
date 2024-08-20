@@ -17,23 +17,12 @@ const database_1 = __importDefault(require("../configs/database"));
 const Error_1 = require("./Error");
 const connection = database_1.default.mysqlConection();
 class Mysql {
-    constructor() {
-        this.selectSum = () => { };
-        this.selectBetween = (configs, callBack) => {
-            const options = {
-                where: "salary",
-                between: "1000 and 7000"
-            };
-        };
-        this.insert = () => { };
-        this.updatet = () => { };
-        this.delete = () => { };
-    }
 }
 _a = Mysql;
 Mysql.check = () => {
     connection.connect(function (err) {
         if (err) {
+            console.log("Mysql ERROR to connection: ", err);
             return 'Mysql ERROR to connection. please read log file';
         }
         else {
@@ -54,16 +43,35 @@ Mysql.select = (configs, callBack) => {
     }
     const qry = `SELECT ${(_b = configs.select) !== null && _b !== void 0 ? _b : '*'} FROM ${configs.table}  ${configs.where ? 'WHERE ' + configs.where : ''} ORDER BY ${(_c = configs.orderBy) !== null && _c !== void 0 ? _c : 'id DESC'};`;
     connection.connect((err) => {
-        if (err)
-            throw err;
+        if (err) {
+            console.log('mysql not connected : ', err);
+            callBack("mysql not connected : please read log file");
+            return false;
+        }
+        ;
         console.log("Connected!");
         connection.query(qry, (err, results) => __awaiter(void 0, void 0, void 0, function* () {
-            if (err)
-                throw err;
+            if (err) {
+                console.log('mysql not connected to table : ', err);
+                callBack("mysql not connected to table : please read log file");
+                return false;
+            }
+            ;
             callBack(results);
         }));
         connection.end();
     });
     // return res
 };
+Mysql.selectSum = (configs, callBack) => { };
+Mysql.selectBetween = (configs, callBack) => {
+    const options = {
+        where: "salary",
+        between: "1000 and 7000"
+    };
+};
+Mysql.insert = (configs, callBack) => { };
+Mysql.updatet = (configs, callBack) => { };
+Mysql.delete = (configs, callBack) => { };
+Mysql.db = (configs, callBack) => { };
 exports.default = Mysql;

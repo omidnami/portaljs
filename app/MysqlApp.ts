@@ -10,6 +10,8 @@ export default class Mysql {
         connection.connect(function(err:any) {
             
         if (err){
+            console.log("Mysql ERROR to connection: ", err);
+            
             return 'Mysql ERROR to connection. please read log file'
         }else {
             return 'Mysql connected'
@@ -33,12 +35,20 @@ export default class Mysql {
         const qry =`SELECT ${configs.select??'*'} FROM ${configs.table}  ${configs.where?'WHERE '+configs.where:''} ORDER BY ${configs.orderBy??'id DESC'};`;
 
         connection.connect((err:any) => {
-            if (err) throw err;
+            if (err) {
+                console.log('mysql not connected : ', err);
+                callBack("mysql not connected : please read log file")
+                return false
+            };
 
             console.log("Connected!");
 
             connection.query(qry, async (err:any, results:any) => {
-                if (err) throw err;
+                if (err) {
+                    console.log('mysql not connected to table : ', err);
+                     callBack("mysql not connected to table : please read log file")
+                     return false
+                };
 
                 callBack(results)
                  
