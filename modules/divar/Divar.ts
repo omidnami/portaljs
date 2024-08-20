@@ -1,5 +1,5 @@
 import Components from "../../configs/Components"
-import { Start }  from "../../../services/divar"
+import  {Start}   from "../../../services/divar/index.js"
 class DivarService extends Components {
     
     configs(data:CONFIGS):INFO {
