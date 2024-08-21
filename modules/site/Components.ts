@@ -1,4 +1,5 @@
 import Mysql from "../../app/MysqlApp";
+import { SendMail } from "../../configs/email";
 class ApiComponent {
     
     index(req:any, res:any, next:any):void {
@@ -24,9 +25,15 @@ class ApiComponent {
     }
 
     id(req:any, res:any){
-        console.log(req.query);
-        let result = {id: req.params.id, name: req.query.name}     
-        res.json(result)
+        SendMail({
+            from: "info@omid-nami.ir",
+            to: "omid.nami.110@gmail.com",
+            subject: "hello test",
+            text: "hello world",
+            html: "<h1>dear omid nami</h1>"+
+            "<p>here good!</p>"
+        })    
+        res.json('mail send')
     }
 
 }
