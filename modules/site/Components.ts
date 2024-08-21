@@ -1,6 +1,5 @@
 import Mysql from "../../app/MysqlApp";
-import Components from "../../configs/Components"
-class ApiComponent extends Components {
+class ApiComponent {
     
     index(req:any, res:any, next:any):void {
         const options = {
