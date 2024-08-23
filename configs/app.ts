@@ -1,6 +1,6 @@
 const express = require("express")
 import Provider from "../providers/Provider"
-import RouterProvider from "../providers/RouterProvider"
+const fileUpload = require('express-fileupload');
 
 
 export const App = express()
@@ -19,6 +19,12 @@ App.use( (req: any, res:any, next:any) => {
     provider.run()
     next();
 });
+
+//upload
+App.use(fileUpload({
+    useTempFiles: process.env.TEMP_FILES == 'true' ? true : false,
+    tempFileDir: process.env.TEMP_DIR
+}));
 
 
 export default express
