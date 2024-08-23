@@ -1,8 +1,8 @@
-interface INFO {
-    "status" : number,
-    "msg" : string,
+export type INFO = {
+    "status" : number;
+    "msg" : string;
 }
 
-interface CONFIGS {
+export type CONFIGS = {
     "keys" : string
 }

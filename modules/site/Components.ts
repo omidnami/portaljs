@@ -1,5 +1,6 @@
 import Mysql from "../../app/MysqlApp";
 import { SendMail } from "../../configs/email";
+import { SendNewEmail } from "../../configs/queue";
 class ApiComponent {
     
     index(req:any, res:any, next:any):void {
@@ -24,15 +25,25 @@ class ApiComponent {
         res.send('test router')
     }
 
-    id(req:any, res:any){
-        SendMail({
-            from: "info@omid-nami.ir",
-            to: "omid.nami.110@gmail.com",
-            subject: "hello test",
-            text: "hello world",
-            html: "<h1>dear omid nami</h1>"+
-            "<p>here good!</p>"
-        })    
+    async id(req:any, res:any){
+        // SendMail({
+        //     from: "info@omid-nami.ir",
+        //     to: "omid.nami.110@gmail.com",
+        //     subject: "hello test",
+        //     text: "hello world",
+        //     html: "<h1>dear omid nami</h1>"+
+        //     "<p>here good!</p>"
+        // })    
+        
+            const emailOption = {   
+                from: "info@omid-nami.ir",
+                to: "omid.nami.110@gmail.com",
+                subject: "hello test",
+                text: "hello world",
+                html: "<h1>dear omid nami</h1>"+
+                "<p>good!</p>"
+            }
+            await SendNewEmail(emailOption)
         res.json('mail send')
     }
 

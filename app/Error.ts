@@ -1,3 +1,3 @@
 import Mysql from "./MysqlApp"
 
-export const ErrorSqlDesible = () => {return "mysql Desibled in env file"}
+export const ErrorSqlDesible = () => {return "Mysql is Desibled in the env file"}
