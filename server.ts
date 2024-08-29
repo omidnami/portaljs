@@ -13,6 +13,6 @@ if (process.env.SOCKET === "true"){
 // server conect on portocol http or https
 App.listen((process.env.PORT || 3008),()=>{
     StartQueue()
-    console.log("Server is Running by : "+ process.env.PROJECT_NAME +" port: "+process.env.PORT)
+    console.log("Server is Running at : "+ process.env.PROJECT_NAME +" port: "+process.env.PORT)
     // console.log('The solution is: ', JSON.stringify(msql));
 })
