@@ -1,6 +1,6 @@
 import Mysql from "../../app/MysqlApp";
 import { SendMail } from "../../configs/email";
-import { SendNewEmail } from "../../configs/queue";
+import { createQueue, processQueue } from "../../configs/queue";
 class ApiComponent {
     
     index(req:any, res:any, next:any):void {
@@ -21,7 +21,8 @@ class ApiComponent {
         
     }
 
-    test(req:any, res:any){
+    test(req:any, res:any) {
+        processQueue('email')
         res.send('test router')
     }
 
@@ -34,7 +35,8 @@ class ApiComponent {
         //     html: "<h1>dear omid nami</h1>"+
         //     "<p>here good!</p>"
         // })    
-        
+
+
             const emailOption = {   
                 from: "info@omid-nami.ir",
                 to: "omid.nami.110@gmail.com",
@@ -43,7 +45,12 @@ class ApiComponent {
                 html: "<h1>dear omid nami</h1>"+
                 "<p>good!</p>"
             }
-            await SendNewEmail(emailOption)
+            // SendNewEmail(emailOption).then(() => console.log('Job has been added'))
+            // .catch(err => console.error('Failed to add job', err)); 
+            
+                createQueue('email',emailOption);
+            
+            
         res.json('mail send')
     }
 

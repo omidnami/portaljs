@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-
+require('dotenv').config()
 export default class Database {
 
     static mysqlConection () {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "dev" : "ts-node-dev --respawn --transpile-only server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only server.ts"
   },
   "author": "omidnami.com",
   "license": "ISC",
@@ -14,20 +14,26 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "@bull-board/api": "^5.21.4",
+    "@bull-board/express": "^5.21.4",
+    "@bull-board/ui": "^5.21.4",
     "@types/bull": "^4.10.0",
+    "@types/kue": "^0.11.17",
     "body-parser": "^1.20.2",
-    "bull": "^4.16.0",
+    "bull": "^4.16.1",
     "bullmq": "^5.12.10",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-fileupload": "^1.5.1",
     "graphql": "^16.9.0",
     "ioredis": "^5.4.1",
+    "kue": "^0.11.6",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "nodemailer": "^6.9.14",
     "redis": "^4.7.0",
     "smtp-server": "^3.13.4",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "ts-node-dev": "^2.0.0"
   }
 }
