@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // async..await is not allowed in global scope, must use a wrapper
-export async function SendMail(opt:MAILSENDER) {
+export async function SendMail(opt:MAILSENDER, callBack:any) {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: opt.from || process.env.SMTP_USER, // sender address
@@ -23,14 +23,17 @@ export async function SendMail(opt:MAILSENDER) {
     text: opt.text || '', // plain text body
     html: opt.html || '<p></p>', // html body
   }, (error:any, info:any) => {
-    if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response+' '+  process.env.SMTP_HOST);
-      }
     transporter.close();
-});
 
+    if (error) {
+      callBack(false, error)
+        //console.log(error);
+    } else {
+      callBack(true)
+        //console.log('Email sent: ' + info.response+' '+  process.env.SMTP_HOST);
+    }
+});
+  
   // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
 }
 

@@ -1,7 +1,6 @@
 import kue from "kue"
-import { EmailType } from "../interfaces/emailInter"
-import { SendMail } from "./email";
-const queue = kue.createQueue({
+import { emailQueue } from "../queue/emailQueue";
+export const queue = kue.createQueue({
   prefix: 'q',
   redis: {
     port: 6379,
@@ -15,7 +14,12 @@ const queue = kue.createQueue({
 export const createQueue = (opt:{name:string , data:any, priority?:string|number, attempts?:number, delay?:number}) => {
     // prioryty = low: 10 normal: 0 medium: -5 high: -10 critical: -15
 
-    const job = queue.create(opt.name, opt.data).delay(opt.delay??0).priority(opt.priority??0).attempts(opt.attempts??1).ttl(30000).save((error:any) => {
+    const job = queue.create(opt.name, opt.data)
+    .delay(opt.delay??0) // milisocunds
+    .priority(opt.priority??0) // prioryty = low: 10 normal: 0 medium: -5 high: -10 critical: -15
+    .attempts(opt.attempts??1) // repeat again filed queue
+    .ttl(30000)
+    .save((error:any) => {
         if (error) {
             console.error('Error queue => ', error);
         } else {
@@ -25,15 +29,6 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
 
 }
 
-  export const processQueue = (name:string, worker:number = 1) => {
-    queue.process(name, worker, (job:any, done:any) => {
-      console.log(name,' data job => ',job.id);
-        SendMail(job.data)
-      done();
-  });
-
-  // export const queueLog = () {
-  //   queue.on()
-  // }
-
+export const processQueue = () => {
+        emailQueue('email')
 }

@@ -1,11 +1,12 @@
 const express = require("express")
 import Provider from "../providers/Provider"
+import { processQueue } from "./queue";
 const fileUpload = require('express-fileupload');
 
 
 export const App = express()
 
-require('dotenv').config()
+require('dotenv').config() 
 
 const bodyParser = require('body-parser')
 
@@ -20,6 +21,7 @@ App.use( (req: any, res:any, next:any) => {
     next();
 });
 
+processQueue()
 
 //upload
 App.use(fileUpload({

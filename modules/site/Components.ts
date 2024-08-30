@@ -1,6 +1,6 @@
 import Mysql from "../../app/MysqlApp";
 import { SendMail } from "../../configs/email";
-import { createQueue, processQueue } from "../../configs/queue";
+import { createQueue } from "../../configs/queue";
 class ApiComponent {
     
     index(req:any, res:any, next:any):void {
@@ -22,19 +22,11 @@ class ApiComponent {
     }
 
     test(req:any, res:any) {
-        processQueue('email')
+        
         res.send('test router')
     }
 
-    async id(req:any, res:any){
-        // SendMail({
-        //     from: "info@omid-nami.ir",
-        //     to: "omid.nami.110@gmail.com",
-        //     subject: "hello test",
-        //     text: "hello world",
-        //     html: "<h1>dear omid nami</h1>"+
-        //     "<p>here good!</p>"
-        // })    
+    async id(req:any, res:any){  
 
 
             const emailOption = {   
@@ -45,8 +37,6 @@ class ApiComponent {
                 html: "<h1>dear omid nami</h1>"+
                 "<p>good!</p>"
             }
-            // SendNewEmail(emailOption).then(() => console.log('Job has been added'))
-            // .catch(err => console.error('Failed to add job', err)); 
             
                 createQueue({name:'email',data:emailOption});
             
