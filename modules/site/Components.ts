@@ -48,7 +48,7 @@ class ApiComponent {
             // SendNewEmail(emailOption).then(() => console.log('Job has been added'))
             // .catch(err => console.error('Failed to add job', err)); 
             
-                createQueue('email',emailOption);
+                createQueue({name:'email',data:emailOption});
             
             
         res.json('mail send')
