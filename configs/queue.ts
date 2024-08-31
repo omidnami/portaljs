@@ -1,28 +1,39 @@
-const Bull = require("bull")
-import { Job } from "bull";
-
-import { EmailType } from "../interfaces/emailInter";
-// import redisConnection from "./redis-connection"
+import kue from "kue"
+import { EmailType } from "../interfaces/emailInter"
 import { SendMail } from "./email";
+const queue = kue.createQueue({
+  prefix: 'q',
+  redis: {
+    port: 6379,
+    host: '127.0.0.1',
+    auth: '',
+    options: {
+      // see https://github.com/mranney/node_redis#rediscreateclient
+    }
+  }});
 
-const EmailQueue = new Bull('email',  {  
-    redis: "localhost:6379",
-})
+export const createQueue = (opt:{name:string , data:any, priority?:string|number, attempts?:number, delay?:number}) => {
+    // prioryty = low: 10 normal: 0 medium: -5 high: -10 critical: -15
 
-// email queue
-export const SendNewEmail = async (email: EmailType) => {
-    EmailQueue.add({ ...email });
-};
-// email jobs
-const ProcessEmailQueue = async (job: Job) => {
-    console.log(job);
+    const job = queue.create(opt.name, opt.data).delay(opt.delay??0).priority(opt.priority??0).attempts(opt.attempts??1).ttl(30000).save((error:any) => {
+        if (error) {
+            console.error('Error queue => ', error);
+        } else {
+            console.log(`Email job added to queue: ${opt.name} ${job.id}`);
+        }
+  } )
 
-    SendMail(job.data)  
 }
 
-// add process queue
-export const StartQueue = () => {
-    console.log('process');
+  export const processQueue = (name:string, worker:number = 1) => {
+    queue.process(name, worker, (job:any, done:any) => {
+      console.log(name,' data job => ',job.id);
+        SendMail(job.data)
+      done();
+  });
 
-    EmailQueue.process(ProcessEmailQueue)
+  // export const queueLog = () {
+  //   queue.on()
+  // }
+
 }
