@@ -1,5 +1,6 @@
 import kue from "kue"
 import { EmailType } from "../interfaces/emailInter"
+import { SendMail } from "./email";
 const queue = kue.createQueue({
   prefix: 'q',
   redis: {
@@ -18,7 +19,7 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
         if (error) {
             console.error('Error queue => ', error);
         } else {
-            console.log(`Email job added to queue: ${name} ${job.id}`);
+            console.log(`Email job added to queue: ${opt.name} ${job.id}`);
         }
   } )
 
@@ -26,8 +27,8 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
 
   export const processQueue = (name:string, worker:number = 1) => {
     queue.process(name, worker, (job:any, done:any) => {
-      console.log(name,' data job => ',job);
-      
+      console.log(name,' data job => ',job.id);
+        SendMail(job.data)
       done();
   });
 
