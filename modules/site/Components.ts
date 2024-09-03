@@ -22,7 +22,7 @@ class ApiComponent {
     }
 
     test(req:any, res:any) {
-        
+        createQueue({name:'test',data:null})        
         res.send('test router')
     }
 

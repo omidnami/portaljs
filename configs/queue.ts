@@ -1,5 +1,6 @@
 import kue from "kue"
 import { emailQueue } from "../queue/emailQueue";
+import { testQueue } from "../queue/testQueue";
 export const queue = kue.createQueue({
   prefix: 'q',
   redis: {
@@ -23,7 +24,7 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
         if (error) {
             console.error('Error queue => ', error);
         } else {
-            console.log(`Email job added to queue: ${opt.name} ${job.id}`);
+            console.log(`${opt.name} job added to queue: ${opt.name} ${job.id}`);
         }
   } )
 
@@ -31,4 +32,5 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
 
 export const processQueue = () => {
         emailQueue('email')
+        testQueue('test')
 }
