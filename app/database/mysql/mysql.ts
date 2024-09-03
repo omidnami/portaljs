@@ -3,12 +3,12 @@ import { createPool, Pool } from 'mysql2/promise';
 
 let pool: Pool;
 
-export function initializePool() {
+export function initializePool(data:ConnectionInterface) {
   pool = createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'database_name',
+    host: data.host,
+    user: data.user,
+    password: data.password,
+    database: data.database,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

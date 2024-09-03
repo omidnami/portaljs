@@ -10,9 +10,9 @@ type DatabaseModule = typeof mysql | typeof postgresql | typeof sqlserver;
 const databases: { [key: string]: DatabaseModule } = {
   mysql,
   postgresql,
+  sqlserver
   // mongodb,
   // sqlite,
-  sqlserver
 };
 
 let currentDb: DatabaseModule;
@@ -24,9 +24,9 @@ export function setDatabase(dbType: string) {
   currentDb = databases[dbType];
 }
 
-export async function connect() {
+export async function connect(data:ConnectionInterface) {
   if (currentDb) {
-    await currentDb.initializePool();
+    await currentDb.initializePool(data);
   } else {
     throw new Error('No database selected.');
   }
