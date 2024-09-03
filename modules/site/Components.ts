@@ -1,10 +1,10 @@
 import { createQueue, processQueue } from "../../configs/queue";
-import User from "../../models/UserModel";
+import Users from "../../models/UsersModel";
 
 class ApiComponent {
     
    async index(req:any, res:any, next:any) {
-        const users = await User.select('name, emaile, id').orderBy({id:"ASC"}).get()
+        const users = await Users.select('name, emaile, id').orderBy({id:"ASC"}).get()
 
 
         res.json(users)

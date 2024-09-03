@@ -13,20 +13,24 @@ program
   .command('make:model <name> using <sql>')
   .description('Create a new model')
   .action((name, using, sql) => {
-    const modelName = name.charAt(0).toUpperCase() + name.slice(1);
-    const sqlType = sql;
+    const modelName = name.charAt(0).toUpperCase() + name.slice(1)
+    const sqlType = sql
+    const connection = sqlType + 'Connection'
+    const dbName = name
     const modelContent = `
 import { BaseModel } from "../app/database/${sqlType}/BaseModel";
+import { ${connection} } from "../configs/database";
 class ${modelName} extends BaseModel  {
   constructor() {
-    super("${modelName}");
+    ${connection}()
+    super("${dbName}");
   }
 }
 
 export default ${modelName};
 `;
 
-    const modelDir = path.join(__dirname, '../../models');
+    const modelDir = path.join(__dirname, 'models');
     if (!fs.existsSync(modelDir)) {
       fs.mkdirSync(modelDir);
     }

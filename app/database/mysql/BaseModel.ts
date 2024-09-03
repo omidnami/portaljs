@@ -12,8 +12,8 @@ export class BaseModel {
         this.tableName = tableName;
     }
 
-    static async connectToDatabase(dbType: string, data: ConnectionInterface) {
-        setDatabase(dbType);
+    static async connectToDatabase(data: ConnectionInterface) {
+        setDatabase('mysql');
         await connect(data);
     }
 
