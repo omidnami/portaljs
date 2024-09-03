@@ -1,5 +1,5 @@
 import Database from "../configs/database";
-import { ErrorSqlDesible } from "./Error";
+import { ErrorSqlConnection, ErrorSqlDesible, ErrorSqlSelectTable, ErrorSqlTable } from "./Error";
 
 const connection = Database.mysqlConection()
 
@@ -28,16 +28,17 @@ export default class Mysql {
             return false
         }
 
-            if (!configs.table) {
-                callBack("please enter valide table name options = {table: 'TABLE_NAME'}")
-                return false
-            }
+        if (!configs.table) {
+            callBack(ErrorSqlSelectTable())
+            return false
+        }
+
         const qry =`SELECT ${configs.select??'*'} FROM ${configs.table}  ${configs.where?'WHERE '+configs.where:''} ORDER BY ${configs.orderBy??'id DESC'};`;
 
         connection.connect((err:any) => {
             if (err) {
-                console.log('mysql not connected : ', err);
-                callBack("mysql not connected : please read log file")
+                console.error('mysql not connected : ', err);
+                callBack(ErrorSqlConnection())
                 return false
             };
 
@@ -45,8 +46,8 @@ export default class Mysql {
 
             connection.query(qry, async (err:any, results:any) => {
                 if (err) {
-                    console.log('mysql not connected to table : ', err);
-                     callBack("mysql not connected to table : please read log file")
+                    console.error('mysql not connected to table : ', err);
+                     callBack(ErrorSqlTable())
                      return false
                 };
 
