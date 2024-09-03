@@ -31,6 +31,6 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
 }
 
 export const processQueue = () => {
-        emailQueue('email')
-        testQueue('test')
+        emailQueue()
+        testQueue()
 }

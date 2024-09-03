@@ -4,9 +4,9 @@ require('dotenv').config();
 interface MAILSENDER {from:string , to:string, subject:string, text:string, html:string}
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp,gmail.com',
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: Number(process.env.SMTP_PORT) || 465,
-  secure: Boolean(process.env.SMTP_SECRET) || true, // Use `true` for port 465, `false` for all other ports
+  secure: process.env.SMTP_SECRET === "true" ? true : false || true, // Use `true` for port 465, `false` for all other ports
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,

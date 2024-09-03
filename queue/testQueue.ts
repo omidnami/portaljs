@@ -1,10 +1,10 @@
 import { queue } from "../configs/queue";
 
-export const testQueue = (name:string, worker:number = 1) => {
+export const testQueue = (worker:number = 1) => {
     
-    queue.process(name, worker, (job:any, done:any) => {
+    queue.process("test", worker, (job:any, done:any) => {
 
-        console.log(name,' data job => ', job.id);
+        console.log("test data job => ", job.id);
         done();
         
     }); 

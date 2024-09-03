@@ -19,14 +19,14 @@ class ApiComponent {
 
             const emailOption = {   
                 from: "info@omid-nami.ir",
-                to: "omid.nami.110@gmail.com",
+                to: "info@omid-nami.ir",
                 subject: "hello test",
                 text: "hello world",
                 html: "<h1>dear omid nami</h1>"+
                 "<p>good!</p>"
             }
             
-              // createQueue({name:'email',data:emailOption});
+            createQueue({name:'email',data:emailOption});
             
             
         res.json('mail send')
