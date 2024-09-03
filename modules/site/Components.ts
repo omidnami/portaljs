@@ -1,28 +1,17 @@
-import Mysql from "../../app/MysqlApp";
-import { SendMail } from "../../configs/email";
 import { createQueue, processQueue } from "../../configs/queue";
+import User from "../../models/UserModel";
+
 class ApiComponent {
     
-    index(req:any, res:any, next:any):void {
-        const options = {
-            select:"name, id",
-            table:"users",
-            // where:"id = 1"
-            orderBy:'id ASC'
-        }
-        try {
-            Mysql.select(options, async(response:any) => {
-                res.json(response)
-                console.log('result : ', response);
-            })
-        }catch(e:any){
-            res.json({"ERROR: ": e})
-        }
-        
+   async index(req:any, res:any, next:any) {
+        const users = await User.select('name, emaile, id').orderBy({id:"ASC"}).get()
+
+
+        res.json(users)
     }
 
     test(req:any, res:any) {
-        processQueue('email')
+        //processQueue('email')
         res.send('test router')
     }
 
@@ -48,7 +37,7 @@ class ApiComponent {
             // SendNewEmail(emailOption).then(() => console.log('Job has been added'))
             // .catch(err => console.error('Failed to add job', err)); 
             
-                createQueue({name:'email',data:emailOption});
+              // createQueue({name:'email',data:emailOption});
             
             
         res.json('mail send')

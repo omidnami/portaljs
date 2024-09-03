@@ -1,25 +1,12 @@
-const mysql = require('mysql');
-require('dotenv').config()
-export default class Database {
+import { BaseModel } from "../app/database/mysql/BaseModel";
 
-    static mysqlConection () {
-        if (process.env.MYSQL_STATUS === 'false') {
-            console.log("mysql Desibled in env file");
-            return false
-        }
-        const connection = mysql.createConnection({
-        host     : process.env.MYSQL_HOST || 'localhost',
-        user     : process.env.MYSQL_USER || 'db_user',
-        password : process.env.MYSQL_PASS || '',
-        database : process.env.MYSQL_NAME || 'db_name'
+require('dotenv').config()
+
+    export  const  mysqlConection = async () => {
+        await BaseModel.connectToDatabase('mysql', {
+            host: 'localhost',
+            user: 'root',
+            password: '',
+            database: 'test'
         });
-        // connection.connect()
-        // let res:any = null
-        // connection.query('select * AS users', function (error:any, results:any, fields:any) {
-        //     if (error) throw error;
-        //     res = results[0]
-        //     console.log('The solution is: ', fields);
-        //   });
-        return connection
     }
-}

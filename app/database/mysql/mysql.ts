@@ -13,6 +13,8 @@ export function initializePool(data:ConnectionInterface) {
     connectionLimit: 10,
     queueLimit: 0
   });
+  console.log("sql connection ok");
+  
 }
 
 export async function getConnection() {
@@ -29,11 +31,14 @@ export async function query(sql: string, params?: any[]): Promise<any[]> {
     return results;
   } finally {
     connection.release();
+    await closePool()
   }
 }
 
 export async function closePool() {
   if (pool) {
     await pool.end();
+    console.log("sql disconnect ok");
+    
   }
 }

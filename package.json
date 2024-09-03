@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only server.ts",
+    "portalcli": "ts-node portal.ts"
   },
   "author": "omidnami.com",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/commander": "^2.12.2",
     "@types/express": "^4.17.21",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.5.2",
     "typescript": "^5.5.4"
   },
   "dependencies": {
@@ -27,6 +29,7 @@
     "body-parser": "^1.20.2",
     "bull": "^4.16.1",
     "bullmq": "^5.12.10",
+    "commander": "^12.1.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-fileupload": "^1.5.1",
