@@ -54,7 +54,7 @@ export default class RouterCli {
 
         try {
             await fs.access(filePath);
-            console.error(`Error: File ${this.name} exists`);
+            console.error(`Error: Router ${this.name} exists in routers dir`);
             return false; // File exists
         } catch (err) {
             try {

@@ -7,7 +7,7 @@ const program = new Command();
 
 program
   .version('1.0.0')
-  .description('CLI for creating models with portaljs cli')
+  .description('CLI for creating futiors with portalcli')
 
   //make model
 program
@@ -85,9 +85,8 @@ program
 //make router
 program
   .command('make:router <name>')
-  .description('Description for router')
+  .description('Create a new router')
   .action((name) => {
-    // console.log('Executing router '+ name);
     const routercli = new RouterCli(name)
     routercli.runCli()
 });

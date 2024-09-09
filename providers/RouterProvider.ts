@@ -2,6 +2,9 @@ import { Router } from "../modules/site"
 import { RouterDivar } from "../modules/divar"
 import { apiRouter } from "../routers/api";
 import { omidRouter } from "../routers/omid";
+import { api2Router } from "../routers/api2";
+import { api3Router } from "../routers/api3";
+import { api4Router } from "../routers/api4";
 // Router Import End
 
 class RouterProvider  {
@@ -23,6 +26,9 @@ class RouterProvider  {
       this.App.use("/", Router)
       this.App.use("/", apiRouter);
       this.App.use("/", omidRouter);
+    this.App.use("/", api2Router);
+    this.App.use("/", api3Router);
+    this.App.use("/", api4Router);
       this.App.use("/", RouterDivar)
         // Router End
     }
