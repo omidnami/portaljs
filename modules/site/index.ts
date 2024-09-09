@@ -6,5 +6,5 @@ export const Router = express.Router()
 
 // Handling routs
 Router.get("/", component.index)
-Router.get("/api/1", component.test)
-Router.get("/api/:id", component.id)
+// Router.get("/api/1", component.test)
+// Router.get("/api/:id", component.id)

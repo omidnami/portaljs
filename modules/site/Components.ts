@@ -1,4 +1,4 @@
-import { createQueue } from "../../configs/queue";
+// import { createQueue } from "../../configs/queue";
 import Users from "../../models/UsersModel";
 class ApiComponent {
     
@@ -10,7 +10,7 @@ class ApiComponent {
     }
 
     test(req:any, res:any) {
-        createQueue({name:'test',data:null})        
+        //createQueue({name:'test',data:null})        
         res.send('test router')
     }
 
@@ -26,7 +26,7 @@ class ApiComponent {
                 "<p>good!</p>"
             }
             
-            createQueue({name:'email',data:emailOption});
+            //createQueue({name:'email',data:emailOption});
             
             
         res.json('mail send')

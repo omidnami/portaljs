@@ -14,7 +14,6 @@ export function initializePool(data:ConnectionInterface) {
     queueLimit: 0
   });
   console.log("sql connection ok");
-  
 }
 
 export async function getConnection() {
@@ -39,6 +38,5 @@ export async function closePool() {
   if (pool) {
     await pool.end();
     console.log("sql disconnect ok");
-    
   }
 }

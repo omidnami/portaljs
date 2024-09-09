@@ -1,5 +1,8 @@
 import { Router } from "../modules/site"
 import { RouterDivar } from "../modules/divar"
+import { apiRouter } from "../routers/api";
+import { omidRouter } from "../routers/omid";
+// Router Import End
 
 class RouterProvider  {
     private App:any
@@ -17,8 +20,11 @@ class RouterProvider  {
     }
     
     private router(next:any) {
-        this.App.use("/", Router)
-        this.App.use("/", RouterDivar)
+      this.App.use("/", Router)
+      this.App.use("/", apiRouter);
+      this.App.use("/", omidRouter);
+      this.App.use("/", RouterDivar)
+        // Router End
     }
 
     private socket() {}

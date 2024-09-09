@@ -21,7 +21,7 @@ App.use( (req: any, res:any, next:any) => {
     next();
 });
 
-processQueue()
+//processQueue()
 
 //upload
 App.use(fileUpload({

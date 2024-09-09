@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
+import RouterCli from './app/cli/Router';
 
 const program = new Command();
 
@@ -83,10 +84,12 @@ program
 
 //make router
 program
-  .command('router')
+  .command('make:router <name>')
   .description('Description for router')
-  .action(() => {
-    console.log('Executing router');
+  .action((name) => {
+    // console.log('Executing router '+ name);
+    const routercli = new RouterCli(name)
+    routercli.runCli()
 });
 
 //make socket_service
