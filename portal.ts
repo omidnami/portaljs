@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import RouterCli from './app/cli/Router';
 import QueueCli from './app/cli/Queue';
+import ControllerCli from './app/cli/Controller';
 
 const program = new Command();
 
@@ -44,10 +45,12 @@ export default ${modelName};
 
   //make controller
 program
-  .command('controller')
-  .description('Description for controller')
-  .action(() => {
-    console.log('Executing controller');
+.command('make:controller <name>')
+.description('Create a new controller')
+.action((name) => {
+  const controllerName = name.charAt(0).toUpperCase() + name.slice(1)
+  const queueCli = new ControllerCli(controllerName)
+  queueCli.runCli()
 });
 
 //make module
@@ -66,7 +69,6 @@ program
 .action((name) => {
   const queueCli = new QueueCli(name)
   queueCli.runCli()
-  console.log('Executing interface ', name);
 });
 
 //make interface

@@ -5,18 +5,10 @@ import { name2Queue } from "../queues/name2Queue";
 import { queue4Queue } from "../queues/queue4Queue";
 import { queue3Queue } from "../queues/queue3Queue";
 import { queue5Queue } from "../queues/queue5Queue";
+import redisConfig from "./redis-connection";
 // Import Queue End
 
-export const queue = kue.createQueue({
-  prefix: 'q',
-  redis: {
-    port: 6379,
-    host: '127.0.0.1',
-    auth: '',
-    options: {
-      // see https://github.com/mranney/node_redis#rediscreateclient
-    }
-  }});
+export const queue = kue.createQueue(redisConfig);
 
 export const createQueue = (opt:{name:string , data:any, priority?:string|number, attempts?:number, delay?:number}) => {
     // prioryty = low: 10 normal: 0 medium: -5 high: -10 critical: -15
