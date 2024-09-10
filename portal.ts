@@ -4,6 +4,7 @@ import * as path from 'path';
 import RouterCli from './app/cli/Router';
 import QueueCli from './app/cli/Queue';
 import ControllerCli from './app/cli/Controller';
+import InterfaceCli from './app/cli/Interface';
 
 const program = new Command();
 
@@ -73,10 +74,12 @@ program
 
 //make interface
 program
-  .command('interface')
-  .description('Description for interface')
-  .action(() => {
-    console.log('Executing interface');
+.command('make:inter <name>')
+.description('Create a new interface')
+.action((name) => {
+  const interName = name.charAt(0).toUpperCase() + name.slice(1)
+  const queueCli = new InterfaceCli(interName)
+  queueCli.runCli()
 });
 
 //make middleware
