@@ -1,12 +1,11 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
+export default class QueueCli {
+    protected name : string
+    private folderPath = './queues';
 
-export default class RouterCli {
-    protected name: string;
-    private folderPath = './routers';
-
-    constructor(name: string) {
-        this.name = name;
+    constructor(name: string){
+        this.name = name
     }
 
     async runCli() {
@@ -30,10 +29,9 @@ export default class RouterCli {
             return false;
         }
 
-        console.log(`Router ${this.name} is created at routers dir successfully`);
+        console.log(`Queue ${this.name} is created at queues dir successfully`);
         return true;
     }
-
     async checkOrMakeRootDir(): Promise<boolean> {
         try {
             await fs.access(this.folderPath);
@@ -48,13 +46,12 @@ export default class RouterCli {
             }
         }
     }
-
     async checkOrCreateFile(): Promise<boolean> {
-        const filePath = path.join(this.folderPath, `${this.name}.ts`);
+        const filePath = path.join(this.folderPath, `${this.name}Queue.ts`);
 
         try {
             await fs.access(filePath);
-            console.error(`Error: Router ${this.name} exists in routers dir`);
+            console.error(`Error: Queue ${this.name} exists in queues dir`);
             return false; // File exists
         } catch (err) {
             try {
@@ -66,17 +63,20 @@ export default class RouterCli {
             }
         }
     }
-
     async setCode(): Promise<boolean> {
         const content = `
-        const express = require("express");
-export const ${this.name}Router = express.Router();
+import { queue } from "../configs/queue";
 
-${this.name}Router.get("/${this.name}", (req: any, res: any) => {
-   res.json("hello ${this.name} router");
-});
-        `;
-        const modelPath = path.join(this.folderPath, `${this.name}.ts`);
+export const ${this.name}Queue = (worker:number = 1) => {
+    
+    queue.process("${this.name}", worker, (job:any, done:any) => {
+        // handel work hear
+        console.log("${this.name} data job => ", job.id);
+        done();
+        
+    }); 
+}`;
+        const modelPath = path.join(this.folderPath, `${this.name}Queue.ts`);
 
         try {
             await fs.writeFile(modelPath, content.trim());
@@ -86,16 +86,15 @@ ${this.name}Router.get("/${this.name}", (req: any, res: any) => {
             return false;
         }
     }
-
     async initFileToCore(): Promise<boolean> {
-        const filePath = './providers/RouterProvider.ts';
-        const importCode = `import { ${this.name}Router } from "../routers/${this.name}";\n`;
-        const initCode = `    this.App.use("/", ${this.name}Router);\n`;
+        const filePath = './configs/queue.ts';
+        const importCode = `import { ${this.name}Queue } from "../queues/${this.name}Queue";\n`;
+        const initCode = `\n    ${this.name}Queue();\n`;
 
         try {
             let data = await fs.readFile(filePath, 'utf8');
-            const insertPosition = data.indexOf('// Router End');
-            const insertImportPosition = data.indexOf('// Router Import End');
+            const insertPosition = data.indexOf('// Queue End');
+            const insertImportPosition = data.indexOf('// Import Queue End');
 
             if (insertPosition !== -1 && insertImportPosition !== -1) {
                 data = data.slice(0, insertImportPosition) + importCode + data.slice(insertImportPosition);
@@ -103,7 +102,7 @@ ${this.name}Router.get("/${this.name}", (req: any, res: any) => {
                 await fs.writeFile(filePath, data);
                 return true;
             } else {
-                console.error('Error: "// Router End" or "// Router Import End" comment not found');
+                console.error('Error: "// Queue End" or "// Import Queue End" comment not found');
                 return false;
             }
         } catch (err) {
@@ -112,4 +111,3 @@ ${this.name}Router.get("/${this.name}", (req: any, res: any) => {
         }
     }
 }
-

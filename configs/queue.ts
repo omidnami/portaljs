@@ -1,6 +1,12 @@
 import kue from "kue"
-import { emailQueue } from "../queue/emailQueue";
-import { testQueue } from "../queue/testQueue";
+import { emailQueue } from "../queues/emailQueue";
+import { testQueue } from "../queues/testQueue";
+import { name2Queue } from "../queues/name2Queue";
+import { queue4Queue } from "../queues/queue4Queue";
+import { queue3Queue } from "../queues/queue3Queue";
+import { queue5Queue } from "../queues/queue5Queue";
+// Import Queue End
+
 export const queue = kue.createQueue({
   prefix: 'q',
   redis: {
@@ -31,6 +37,14 @@ export const createQueue = (opt:{name:string , data:any, priority?:string|number
 }
 
 export const processQueue = () => {
+    name2Queue();
+    queue4Queue();
+
+    queue3Queue();
+
+    queue5Queue();
+
         emailQueue()
         testQueue()
+        // Queue End
 }

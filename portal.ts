@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
 import RouterCli from './app/cli/Router';
+import QueueCli from './app/cli/Queue';
 
 const program = new Command();
 
@@ -60,10 +61,12 @@ program
 //make queue
 
 program
-  .command('queue')
-  .description('Description for queue')
-  .action(() => {
-    console.log('Executing queue');
+.command('make:queue <name>')
+.description('Create a new queue')
+.action((name) => {
+  const queueCli = new QueueCli(name)
+  queueCli.runCli()
+  console.log('Executing interface ', name);
 });
 
 //make interface
