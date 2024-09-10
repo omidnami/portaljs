@@ -5,4 +5,4 @@ class OmidController {
     }
 }
 
-export default OmidController
+export default new OmidController()

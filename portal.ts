@@ -10,7 +10,7 @@ const program = new Command();
 
 program
   .version('1.0.0')
-  .description('CLI for creating futiors with portalcli')
+  .description('CLI for creating futiors of portaljs with portalcli')
 
   //make model
 program

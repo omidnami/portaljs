@@ -73,7 +73,7 @@ class ${this.name}Controller {
     }
 }
 
-export default ${this.name}Controller
+export default new ${this.name}Controller()
         `;
         const modelPath = path.join(this.folderPath, `${this.name}Controller.ts`);
 
