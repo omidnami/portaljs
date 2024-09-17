@@ -1,6 +1,6 @@
 import { ValidatorTypeObject } from "../interfaces/validator";
 
-export default class Validators{
+class Validators{
     private messages: any[] = [];
 
     check(input:any[]){
@@ -232,4 +232,4 @@ export default class Validators{
     }
 }
 
-module.exports = new Validators();
+export default new Validators();

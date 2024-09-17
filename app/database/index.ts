@@ -40,7 +40,14 @@ export async function disconnect() {
 
 export async function query<T>(sql: string, params?: any[]): Promise<T[]> {
   if (currentDb) {
-    return await currentDb.query(sql, params);
+    try{
+
+      return await currentDb.query(sql, params);
+    }catch(e:any){
+      console.log(e);
+      
+      return e
+    }
   } else {
     throw new Error('No database selected.');
   }

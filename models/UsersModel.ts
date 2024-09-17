@@ -3,7 +3,7 @@ import { mysqlConnection } from "../configs/database";
 class Users extends BaseModel  {
   constructor() {
     mysqlConnection()
-    super("users");
+    super("wp_users");
   }
 }
 

@@ -5,8 +5,8 @@ require('dotenv').config()
     export  const  mysqlConnection = async () => {
         await BaseModel.connectToDatabase({
             host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'test'
+            user: 'omidnami',
+            password: '@Omidf1122?',
+            database: 'omidnami_main'
         });
     }

@@ -21,12 +21,12 @@ App.use( (req: any, res:any, next:any) => {
     next();
 });
 
-//processQueue()
+processQueue()
 
 //upload
 App.use(fileUpload({
     useTempFiles: process.env.TEMP_FILES == 'true' ? true : false,
-    tempFileDir: process.env.TEMP_DIR
+    tempFileDir: process.env.TEMP_DIR 
 }));
 
 
